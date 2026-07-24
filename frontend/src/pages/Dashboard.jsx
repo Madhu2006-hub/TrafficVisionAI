@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getDashboardStats } from "../services/dashboardService";
+import Layout from "../components/Layout";
+
 
 function Dashboard() {
 
     const navigate = useNavigate();
+
 
     const [stats, setStats] = useState({
         total_users: 0,
@@ -14,11 +17,15 @@ function Dashboard() {
         low_congestion: 0
     });
 
+
+
     useEffect(() => {
 
         loadDashboard();
 
     }, []);
+
+
 
     const loadDashboard = async () => {
 
@@ -30,102 +37,147 @@ function Dashboard() {
 
         }
 
-        catch {
+        catch (error) {
 
             alert("Please Login Again");
 
             navigate("/");
+
         }
 
     };
 
+
+
     const logout = () => {
 
         localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        localStorage.removeItem("name");
 
         navigate("/");
+
     };
+
+
 
     return (
 
-        <div
-            style={{
-                padding: "40px",
-                background: "#f4f6f9",
-                minHeight: "100vh"
-            }}
-        >
+        <Layout>
 
-            <h1>🚦 TrafficVision AI Dashboard</h1>
+            <div>
 
-            <br />
+                <h1 className="mb-4">
+                    🚦 TrafficVision AI Dashboard
+                </h1>
 
-            <div
-                style={{
-                    display: "flex",
-                    gap: "20px",
-                    flexWrap: "wrap"
-                }}
-            >
 
-                <Card
-                    title="Total Users"
-                    value={stats.total_users}
-                />
 
-                <Card
-                    title="Traffic Locations"
-                    value={stats.traffic_locations}
-                />
+                <div
+                    style={{
+                        display: "flex",
+                        gap: "20px",
+                        flexWrap: "wrap"
+                    }}
+                >
 
-                <Card
-                    title="High Congestion"
-                    value={stats.high_congestion}
-                />
+                    <Card
+                        title="Total Users"
+                        value={stats.total_users}
+                    />
 
-                <Card
-                    title="Medium Congestion"
-                    value={stats.medium_congestion}
-                />
 
-                <Card
-                    title="Low Congestion"
-                    value={stats.low_congestion}
-                />
+                    <Card
+                        title="Traffic Locations"
+                        value={stats.traffic_locations}
+                    />
+
+
+                    <Card
+                        title="High Congestion"
+                        value={stats.high_congestion}
+                    />
+
+
+                    <Card
+                        title="Medium Congestion"
+                        value={stats.medium_congestion}
+                    />
+
+
+                    <Card
+                        title="Low Congestion"
+                        value={stats.low_congestion}
+                    />
+
+                </div>
+
+
+
+                <br />
+
+
+
+
+
+
+                <button
+                    onClick={() => navigate("/traffic")}
+                    style={buttonStyle}
+                >
+                    🚦 Traffic Management
+                </button>
+                <button
+                    onClick={() => {
+                        console.log("Traffic button clicked");
+                        navigate("/traffic-records");
+                    }}
+                    style={buttonStyle}
+                >
+                    🚦 View Traffic Records
+                </button>
+
+
+                <button
+                    onClick={() => navigate("/users")}
+                    style={buttonStyle}
+                >
+                    👥 User Management
+                </button>
+
+
+
+                <button
+                    onClick={() => navigate("/profile")}
+                    style={buttonStyle}
+                >
+                    👤 My Profile
+                </button>
+
+
+
+                <button
+                    onClick={logout}
+                    style={{
+                        ...buttonStyle,
+                        background: "#dc3545"
+                    }}
+                >
+                    🚪 Logout
+                </button>
+
 
             </div>
 
-            <br />
 
-            <button
-                onClick={() => navigate("/traffic")}
-                style={buttonStyle}
-            >
-                Traffic Management
-            </button>
-
-            <button
-                onClick={() => navigate("/profile")}
-                style={buttonStyle}
-            >
-                My Profile
-            </button>
-
-            <button
-                onClick={logout}
-                style={{
-                    ...buttonStyle,
-                    background: "red"
-                }}
-            >
-                Logout
-            </button>
-
-        </div>
+        </Layout>
 
     );
 
 }
+
+
+
 
 function Card({ title, value }) {
 
@@ -146,22 +198,28 @@ function Card({ title, value }) {
 
             <h1>{value}</h1>
 
+
         </div>
 
     );
 
 }
 
+
+
 const buttonStyle = {
 
     padding: "10px 20px",
     marginRight: "15px",
-    background: "#007bff",
+    marginBottom: "15px",
+    background: "#0d6efd",
     color: "white",
     border: "none",
     borderRadius: "5px",
     cursor: "pointer"
 
 };
+
+
 
 export default Dashboard;
