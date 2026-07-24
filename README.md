@@ -1,88 +1,192 @@
-# 🚦 TrafficVisionAI
-
+# 🚦 TrafficVisionAI  
 ## Smart City Traffic Prediction & Congestion Management System
 
-### 📖 Overview
+---
 
-TrafficVisionAI is a Smart City Traffic Prediction and Congestion Management System developed as part of the Infosys Springboard/Upskill Campus Internship. The project aims to digitize traffic management by providing a centralized platform for monitoring traffic conditions, managing users, and tracking congestion. The system is designed with role-based access control and is prepared for future Machine Learning integration to predict traffic congestion.
+## 📖 Overview
+
+TrafficVisionAI is a Smart City Traffic Prediction and Congestion Management System developed as part of the **Infosys Springboard / Upskill Campus Internship**.
+
+The project focuses on digitizing traffic management by providing a centralized platform to monitor traffic conditions, analyze congestion patterns, manage users, and predict traffic congestion using Machine Learning techniques.
+
+The system provides secure authentication, role-based access control, interactive dashboards, traffic analytics, and ML-based prediction capabilities to support smart city traffic management.
 
 ---
 
-## 🎯 Objectives
+# 🎯 Objectives
 
-* Develop a centralized traffic management system.
-* Replace manual traffic monitoring with a digital solution.
-* Provide secure role-based authentication.
-* Monitor congestion through an interactive dashboard.
-* Support future Machine Learning-based traffic prediction.
-
----
-
-## ✨ Features
-
-* 🔐 Admin Authentication
-* 👮 Traffic Operator Login
-* 👥 Role-Based Access Control (RBAC)
-* 👤 User Management
-* 📊 Traffic Monitoring Dashboard
-* 🚗 Congestion Tracking
-* 🗄️ MySQL Database Integration
-* ⚡ FastAPI REST APIs
-* 💻 Responsive React Frontend
+- Develop a centralized traffic monitoring system.
+- Replace manual traffic monitoring with a digital solution.
+- Provide secure authentication and authorization.
+- Implement role-based access control.
+- Monitor traffic conditions through dashboards.
+- Analyze historical traffic data.
+- Predict congestion levels using Machine Learning.
 
 ---
 
-## 🛠️ Tech Stack
+# ✨ Features
 
-### Frontend
+## 🔐 Authentication System
 
-* React.js
-* HTML5
-* CSS3
-* JavaScript
-* React Router
+- User login functionality.
+- Secure password handling.
+- Role-Based Access Control (RBAC).
 
-### Backend
+### User Roles
 
-* Python
-* FastAPI
-* SQLAlchemy
+### 👨‍💼 Administrator
 
-### Database
+- Manage users.
+- Monitor traffic data.
+- View analytics.
+- Access all system modules.
 
-* MySQL
+### 👮 Traffic Operator
 
-### Tools & Technologies
-
-* Visual Studio Code
-* Git
-* GitHub
-* Postman
-* MySQL Workbench
+- Monitor traffic conditions.
+- Update traffic information.
+- Track congestion levels.
 
 ---
 
-## 📂 Project Structure
+# 📊 Traffic Dashboard & Analytics
 
-```text
+The system provides:
+
+- Traffic statistics visualization.
+- Congestion monitoring.
+- Historical traffic analysis.
+- Junction-wise traffic information.
+- Interactive charts and reports.
+
+---
+
+# 🚗 Traffic Management Module
+
+Features include:
+
+- Store traffic records.
+- View historical traffic data.
+- Monitor vehicle count.
+- Analyze congestion patterns.
+
+---
+
+# 🤖 Machine Learning Traffic Prediction
+
+TrafficVisionAI uses a Machine Learning model to predict traffic congestion.
+
+### ML Workflow
+
+```
+Traffic Dataset
+       |
+       |
+Data Preprocessing
+       |
+       |
+Feature Engineering
+       |
+       |
+Machine Learning Model
+       |
+       |
+Congestion Prediction
+```
+
+### Model Information
+
+- Dataset: Smart City Traffic Patterns Dataset
+- Model Type: Machine Learning Classification Model
+- Framework: Scikit-learn
+
+Model file:
+
+```
+backend/ml_models/traffic_model.pkl
+```
+
+Note:
+The trained ML model file is excluded from GitHub because it exceeds GitHub's file size limit.
+
+---
+
+# 🏗️ System Architecture
+
+```
+              React Frontend
+                    |
+                    |
+              FastAPI Backend
+                    |
+        -------------------------
+        |                       |
+   MySQL Database        ML Prediction Model
+```
+
+---
+
+# 🛠️ Technology Stack
+
+## Frontend
+
+- React.js
+- JavaScript
+- HTML5
+- CSS3
+- React Router
+
+## Backend
+
+- Python
+- FastAPI
+- SQLAlchemy
+- Pydantic
+
+## Database
+
+- MySQL
+
+## Machine Learning
+
+- Python
+- Pandas
+- NumPy
+- Scikit-learn
+
+## Tools
+
+- Visual Studio Code
+- Git
+- GitHub
+- Postman
+- MySQL Workbench
+
+---
+
+# 📂 Project Structure
+
+```
 TrafficVisionAI/
+
 │
 ├── frontend/
-│   ├── public/
 │   ├── src/
-│   ├── package.json
-│   └── ...
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── services/
+│   └── package.json
 │
 ├── backend/
-│   ├── app/
-│   │   ├── models/
-│   │   ├── routers/
-│   │   ├── schemas/
-│   │   ├── utils/
-│   │   ├── database.py
-│   │   └── main.py
-│   ├── requirements.txt
-│   └── ...
+│   ├── models/
+│   ├── routers/
+│   ├── schemas/
+│   ├── utils/
+│   ├── ml_models/
+│   ├── database.py
+│   ├── main.py
+│   └── requirements.txt
 │
 ├── README.md
 └── .gitignore
@@ -90,63 +194,189 @@ TrafficVisionAI/
 
 ---
 
-## 🚀 Getting Started
+# 🚀 Installation & Setup
 
-### Clone the Repository
+## Clone Repository
 
 ```bash
 git clone https://github.com/Madhu2006-hub/TrafficVisionAI.git
 ```
 
-### Frontend Setup
+---
 
-```bash
-cd frontend
-npm install
-npm start
-```
+# Backend Setup
 
-### Backend Setup
+Navigate to backend:
 
 ```bash
 cd backend
+```
+
+Create virtual environment:
+
+```bash
+python -m venv .venv
+```
+
+Activate virtual environment:
+
+Windows:
+
+```bash
+.venv\Scripts\activate
+```
+
+Install dependencies:
+
+```bash
 pip install -r requirements.txt
-uvicorn app.main:app --reload
+```
+
+Run backend server:
+
+```bash
+uvicorn main:app --reload
+```
+
+Backend URL:
+
+```
+http://127.0.0.1:8000
+```
+
+API Documentation:
+
+```
+http://127.0.0.1:8000/docs
 ```
 
 ---
 
-## 👥 User Roles
+# Frontend Setup
 
-### Administrator
+Navigate to frontend:
 
-* Manage users
-* Monitor traffic
-* Track congestion
-* View reports
-* Access all system modules
+```bash
+cd frontend
+```
 
-### Traffic Operator
+Install dependencies:
 
-* View traffic dashboard
-* Monitor traffic conditions
-* Update traffic information
-* Track congestion
+```bash
+npm install
+```
+
+Start React application:
+
+```bash
+npm start
+```
+
+Frontend URL:
+
+```
+http://localhost:3000
+```
 
 ---
 
-## 📈 Future Enhancements
+# 🗄️ Database Configuration
 
-* Machine Learning-based Traffic Prediction
-* Real-time Traffic Analytics
-* Google Maps Integration
-* Traffic Alerts and Notifications
-* AI-powered Congestion Forecasting
+Database:
+
+```
+MySQL 8.0
+```
+
+Database Name:
+
+```
+trafficvision
+```
+
+Database is used to store:
+
+- User information
+- Traffic records
+- Prediction records
 
 ---
 
-## 👩‍💻 Author
+# 🔌 API Endpoints
+
+## Authentication
+
+```
+POST /login
+```
+
+## Traffic Records
+
+```
+GET /traffic
+POST /traffic
+```
+
+## Dashboard
+
+```
+GET /dashboard
+```
+
+## Analytics
+
+```
+GET /analytics
+```
+
+## Prediction
+
+```
+POST /predict
+```
+
+---
+
+# 📈 Future Enhancements
+
+- Real-time traffic monitoring.
+- Google Maps integration.
+- Live congestion alerts.
+- AI-based traffic forecasting.
+- Smart route recommendations.
+- Mobile application support.
+
+---
+
+# 📸 Screenshots
+
+(Add project screenshots here)
+
+Example:
+
+```
+Dashboard Screenshot
+
+![Dashboard](screenshots/dashboard.png)
+
+
+Analytics Screenshot
+
+![Analytics](screenshots/analytics.png)
+```
+
+---
+
+# 👩‍💻 Author
 
 **Madhu Varshini Garikipati**
 
-GitHub: https://github.com/Madhu2006-hub
+GitHub:
+
+https://github.com/Madhu2006-hub
+
+---
+
+# 📜 License
+
+This project is developed for educational and internship purposes.
