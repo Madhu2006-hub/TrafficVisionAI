@@ -6,15 +6,17 @@ from database import get_db
 from models.user import User
 from utils.jwt_handler import verify_access_token
 
-# Swagger will use this login endpoint
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
 
-# Get currently logged-in user
+# ===============================
+# Get Current User
+# ===============================
 def get_current_user(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
+
     payload = verify_access_token(token)
 
     if payload is None:
@@ -44,27 +46,35 @@ def get_current_user(
     return user
 
 
-# Admin authorization
+# ===============================
+# Admin Only
+# ===============================
 def get_current_admin(
     current_user: User = Depends(get_current_user)
 ):
-    if current_user.role != "admin":
+
+    if current_user.role.lower() != "admin":
+
         raise HTTPException(
             status_code=403,
-            detail="Access Denied"
+            detail="Access Denied! Admin Only"
         )
 
     return current_user
 
 
-# Operator authorization
+# ===============================
+# Operator Only
+# ===============================
 def get_current_operator(
     current_user: User = Depends(get_current_user)
 ):
-    if current_user.role != "operator":
+
+    if current_user.role.lower() != "operator":
+
         raise HTTPException(
             status_code=403,
-            detail="Access Denied"
+            detail="Access Denied! Operator Only"
         )
 
     return current_user
