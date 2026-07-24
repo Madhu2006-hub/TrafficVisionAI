@@ -1,50 +1,117 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
+
+    const navigate = useNavigate();
+
+    const role = localStorage.getItem("role");
+
+    const logout = () => {
+
+        localStorage.removeItem("token");
+        localStorage.removeItem("role");
+        localStorage.removeItem("name");
+
+        navigate("/");
+
+    };
+
     return (
-        <nav
-            style={{
-                backgroundColor: "#1976d2",
-                color: "white",
-                padding: "15px",
-                display: "flex",
-                justifyContent: "space-between",
-                alignItems: "center",
-            }}
-        >
-            <h2>🚦 TrafficVision AI</h2>
 
-            <div>
-                <Link
-                    to="/dashboard"
-                    style={{ color: "white", marginRight: "20px", textDecoration: "none" }}
-                >
-                    Dashboard
-                </Link>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary shadow">
+
+            <div className="container-fluid">
 
                 <Link
-                    to="/traffic"
-                    style={{ color: "white", marginRight: "20px", textDecoration: "none" }}
+                    className="navbar-brand fw-bold"
+                    to="/home"
                 >
-                    Traffic
+                    🚦 TrafficVision AI
                 </Link>
 
-                <Link
-                    to="/profile"
-                    style={{ color: "white", marginRight: "20px", textDecoration: "none" }}
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
                 >
-                    Profile
-                </Link>
+                    <span className="navbar-toggler-icon"></span>
+                </button>
 
-                <Link
-                    to="/"
-                    style={{ color: "white", textDecoration: "none" }}
+                <div
+                    className="collapse navbar-collapse"
+                    id="navbarNav"
                 >
-                    Logout
-                </Link>
+
+                    <ul className="navbar-nav ms-auto">
+
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/home">
+                                🏠 Home
+                            </Link>
+                        </li>
+
+                        {
+                            role === "admin" &&
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/dashboard">
+                                    📊 Dashboard
+                                </Link>
+                            </li>
+                        }
+
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/traffic">
+                                🚦 Traffic
+                            </Link>
+                        </li>
+
+                        {
+                            role === "admin" &&
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/analytics">
+                                    📈 Analytics
+                                </Link>
+                            </li>
+                        }
+
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/map">
+                                🗺 Map
+                            </Link>
+                        </li>
+
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/route">
+                                🛣 Route Prediction
+                            </Link>
+                        </li>
+
+                        <li className="nav-item">
+                            <Link className="nav-link" to="/profile">
+                                👤 Profile
+                            </Link>
+                        </li>
+
+                        <li className="nav-item">
+                            <button
+                                className="btn btn-danger ms-3"
+                                onClick={logout}
+                            >
+                                Logout
+                            </button>
+                        </li>
+
+                    </ul>
+
+                </div>
+
             </div>
+
         </nav>
+
     );
+
 }
 
 export default Navbar;
