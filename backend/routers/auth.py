@@ -13,13 +13,15 @@ router = APIRouter(
     tags=["Authentication"]
 )
 
-# -----------------------------
+
+# ==========================================
 # Register
-# -----------------------------
-
-
+# ==========================================
 @router.post("/register")
-def register(user: UserRegister, db: Session = Depends(get_db)):
+def register(
+    user: UserRegister,
+    db: Session = Depends(get_db)
+):
 
     existing_user = db.query(User).filter(
         User.email == user.email
@@ -35,7 +37,7 @@ def register(user: UserRegister, db: Session = Depends(get_db)):
         name=user.name,
         email=user.email,
         password=hash_password(user.password),
-        role=user.role
+        role=user.role.lower()   # Store role in lowercase
     )
 
     db.add(new_user)
@@ -51,11 +53,14 @@ def register(user: UserRegister, db: Session = Depends(get_db)):
     }
 
 
-# -----------------------------
+# ==========================================
 # Login
-# -----------------------------
+# ==========================================
 @router.post("/login")
-def login(user: UserLogin, db: Session = Depends(get_db)):
+def login(
+    user: UserLogin,
+    db: Session = Depends(get_db)
+):
 
     db_user = db.query(User).filter(
         User.email == user.email
@@ -76,27 +81,32 @@ def login(user: UserLogin, db: Session = Depends(get_db)):
     access_token = create_access_token(
         {
             "sub": db_user.email,
-            "role": db_user.role
+            "role": db_user.role.lower()
         }
     )
 
     return {
         "access_token": access_token,
         "token_type": "bearer",
-        "message": "Login Successful"
+        "message": "Login Successful",
+        "role": db_user.role.lower(),
+        "name": db_user.name,
+        "email": db_user.email
     }
 
 
-# -----------------------------
+# ==========================================
 # Admin Dashboard
-# -----------------------------
+# ==========================================
 @router.get("/admin/dashboard")
 def admin_dashboard(
-    current_user=Depends(get_current_admin)
+    current_user: User = Depends(get_current_admin)
 ):
+
     return {
         "message": "Welcome Admin",
         "user": {
+            "id": current_user.id,
             "name": current_user.name,
             "email": current_user.email,
             "role": current_user.role

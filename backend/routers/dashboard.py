@@ -2,9 +2,8 @@ from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 
 from database import get_db
-from models.user import User
 from models.traffic import Traffic
-from utils.auth import get_current_admin
+
 
 router = APIRouter(
     prefix="/dashboard",
@@ -12,33 +11,74 @@ router = APIRouter(
 )
 
 
-@router.get("/stats")
-def dashboard_stats(
-    db: Session = Depends(get_db),
-    current_user: User = Depends(get_current_admin)
+@router.get("/analytics")
+def get_analytics(
+
+    db: Session = Depends(get_db)
+
 ):
 
-    total_users = db.query(User).count()
+    records = db.query(Traffic).all()
 
-    total_traffic_records = db.query(Traffic).count()
+    total_records = len(records)
 
-    high = db.query(Traffic).filter(
-        Traffic.congestion_level == "High"
-    ).count()
+    total_vehicles = sum(
 
-    medium = db.query(Traffic).filter(
-        Traffic.congestion_level == "Medium"
-    ).count()
+        r.vehicle_count
 
-    low = db.query(Traffic).filter(
-        Traffic.congestion_level == "Low"
-    ).count()
+        for r in records
+
+    )
+
+    high = 0
+
+    medium = 0
+
+    low = 0
+
+    locations = []
+
+    for r in records:
+
+        if r.congestion_level == "High":
+
+            high += 1
+
+        elif r.congestion_level == "Medium":
+
+            medium += 1
+
+        else:
+
+            low += 1
+
+        locations.append({
+
+            "location": r.location,
+
+            "vehicles": r.vehicle_count
+
+        })
 
     return {
-        "admin": current_user.name,
-        "total_users": total_users,
-        "traffic_records": total_traffic_records,
-        "high_congestion": high,
-        "medium_congestion": medium,
-        "low_congestion": low
+
+
+        "total_records": total_records,
+
+
+        "total_vehicles": total_vehicles,
+
+
+        "high": high,
+
+
+        "medium": medium,
+
+
+        "low": low,
+
+
+        "locations": locations[:20]
+
+
     }
