@@ -348,25 +348,6 @@ POST /predict
 
 ---
 
-# 📸 Screenshots
-
-(Add project screenshots here)
-
-Example:
-
-```
-Dashboard Screenshot
-
-![Dashboard](screenshots/dashboard.png)
-
-
-Analytics Screenshot
-
-![Analytics](screenshots/analytics.png)
-```
-
----
-
 # 👩‍💻 Author
 
 **Madhu Varshini Garikipati**
